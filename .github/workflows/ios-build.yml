@@ -1,0 +1,116 @@
+name: iOS build check
+
+# Runs only when you start it from the Actions tab ("Run workflow").
+# To also run on every push to main, uncomment the push block below.
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'Package.swift'
+  #     - 'Sources/**'
+  #     - 'Tests/**'
+  #     - 'NotesRedux.swiftpm/**'
+  #     - '.github/workflows/ios-build.yml'
+
+# The job can read the repository and nothing else.
+permissions:
+  contents: read
+
+# A new run cancels an older run that is still going for the same branch.
+concurrency:
+  group: ios-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      # The core package needs Swift 6.2+ (Xcode 26+). Use the newest
+      # non-beta Xcode installed on the runner image; no sudo needed.
+      - name: Select newest installed Xcode
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -vi beta | sort -V | tail -n 1)
+          echo "Using $XCODE"
+          echo "DEVELOPER_DIR=$XCODE/Contents/Developer" >> "$GITHUB_ENV"
+
+      - name: Show toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
+          xcrun --sdk iphonesimulator --show-sdk-version
+
+      # 1. Same tests as on Windows, run on macOS.
+      - name: Test core library (macOS)
+        run: swift test
+
+      # 2. Compile the core library for the iOS Simulator.
+      #    Xcode names auto-generated package schemes differently across
+      #    versions, so pick from the schemes it actually reports.
+      - name: Build core library for iOS Simulator
+        run: |
+          SCHEMES=$(xcodebuild -list -json | python3 -c 'import json,sys; d=json.load(sys.stdin); print("\n".join((d.get("workspace") or d.get("project") or {}).get("schemes", [])))')
+          echo "Available schemes:"; echo "$SCHEMES"
+          SCHEME=""
+          for candidate in NotesReduxCore notes-redux-Package notes-redux; do
+            if grep -qx "$candidate" <<< "$SCHEMES"; then SCHEME="$candidate"; break; fi
+          done
+          if [ -z "$SCHEME" ]; then SCHEME=$(head -n 1 <<< "$SCHEMES"); fi
+          if [ -z "$SCHEME" ]; then echo "::error::No schemes found"; exit 1; fi
+          echo "Using scheme: $SCHEME"
+          xcodebuild build \
+            -scheme "$SCHEME" \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/dd" \
+            CODE_SIGNING_ALLOWED=NO
+
+      # 3. Type-check every app source file against the iOS SDK (SwiftUI, UIKit)
+      #    and the core module built in step 2. Catches compile errors in the UI.
+      #    -D DEBUG includes the DEBUG-only smoke-test hooks, as in step 4.
+      - name: Type-check app sources against iOS SDK
+        run: |
+          PRODUCTS="$RUNNER_TEMP/dd/Build/Products/Debug-iphonesimulator"
+          find "$PRODUCTS" -maxdepth 1 -name '*.swiftmodule'
+          find NotesRedux.swiftpm -name '*.swift' ! -name Package.swift -print0 |
+            xargs -0 xcrun --sdk iphonesimulator swiftc -typecheck \
+              -target arm64-apple-ios18.0-simulator \
+              -swift-version 5 \
+              -parse-as-library \
+              -module-name AppModule \
+              -D DEBUG \
+              -I "$PRODUCTS"
+
+      # 4. Compile and link the whole app for the iOS Simulator.
+      - name: Build app for iOS Simulator
+        working-directory: NotesRedux.swiftpm
+        run: |
+          xcodebuild -list
+          # The scheme is named after the package ("NotesRedux"), not the
+          # app's display name.
+          xcodebuild build \
+            -scheme NotesRedux \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/dd-app" \
+            CODE_SIGNING_ALLOWED=NO
+
+      # 5. Smoke test: run the app on an iOS Simulator in a few scripted states
+      #    and screenshot each. Fails if the app crashes. Does not tap or type.
+      - name: Smoke test on iOS Simulator
+        run: bash .github/scripts/smoke-test.sh "$RUNNER_TEMP/dd-app" "$RUNNER_TEMP/screenshots"
+
+      # Screenshots are attached to the run page under "Artifacts" for 7 days.
+      - name: Upload smoke test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-screenshots
+          path: ${{ runner.temp }}/screenshots
+          retention-days: 7
+          if-no-files-found: ignore

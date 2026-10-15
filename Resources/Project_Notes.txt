@@ -1,0 +1,141 @@
+App name - Notes Redux
+Part 1:
+Proposal - Notes App 
+
+The focus of the project will be to clone the iOS Notes app. In its simplest implementation, the notes app acts as a platform where you can create, edit, store, and retrieve text files on your device. The individual notes themselves include standard text/document editor features such as sharing, font styling, keyword searching, and ‘last modified’ timestamps. 
+
+The Notes app serves the simple function of allowing users to compose text notes to themselves that are easily accessible, modifiable, and sharable. This was the chosen app for this assignment as it is a simple-enough design with clearly definable features and constraints. 
+The process of cloning the app should provide ample experience with app creation fundamentals, practice with many universal aspects of mobile application design, and familiarity with programs that are intended to be both simple and fast to use.
+
+The core problem this app addresses is storing information for future use. In other words, users are looking for a quick and convenient way to record information they want to remember, retrieve, or modify later. By maintaining a very minimalist and direct design approach, the Notes app provides a direct solution that audiences of almost every age and experience level can utilize. 
+Rather than needing to carry a journal and writing utensil with you, this app consolidates all of the benefits of remembering and documenting into your phone. 
+
+In my implementation, I plan to keep the same simple and effective design philosophy used in the original app. This was a conscious design choice that reduces cognitive load for the users, and keeps the core actions tied to the app fast and hassle-free. 
+This will manifest as retaining aspects of the app such as: the clear list layout of the initial screen for easy recognition and navigation, the icon-based button system for visually apparent user controls that neither get lost on the screen nor distract from the text, and the core functional features commonly associated with quality text-based documentation programs. 
+
+Since I will be focusing on the text editor and document retrieval aspects of the app, I will be removing the other features that are more commonly associated with other tools. While users who dedicate time can leverage these functionalities for efficient note creation, there is a noticeable trade-off in terms of interruption with the flow and formatting of your typical kinds of notes. 
+Additionally, individuals seeking to use features like automatic calculations and hand-drawn illustrations are often going to different apps entirely for those purposes. Thus, the inclusion of these extra features, while potentially beneficial for the breadth of uses, only serves to dilute and disrupt the core functionalities and design purpose being addressed in this submission. 
+This means removing the automatic Math Results functionalities as well as the Lines & Grids features which are more traditionally parts of spreadsheet style programs like Excel or Google Sheets. I will also be removing the Paint features used for handwritten notes, mainly due to the fact that its current implementation can be relatively unwieldy and its automatic formatting can tend to clash with the other styles of note present on the text file.
+Feedback on previous Proposal:
+I really like your app idea. Notes is a great app and focusing on one key use is the right way to go, and your writeup clearly identifies underlying issues that people solve with the Notes app
+My only suggestion is to think about one interesting "twist" on the Notes app that you can't do with it in its current version. Identify a subset of people who you want to build this app for (staring with yourself) and see if there is a key feature to try to make it even better.
+-
+
+Adjustment with Feedback:
+Core problem: It can be unwieldy and inefficient to take notes in real time using the notes app.
+
+Problem impacts: 
+Difficulty navigating to desired note, 
+finding specific details in long notes, 
+having to remove undesired formatting when inserting copied text from other apps, 
+and the hoops of getting to the bottom of your note to add new entries/info
+
+Core Solution: Add easily identifiable and usable shortcuts for the most quintessential actions AND improve information presentation to meet user goals
+
+Feature Fixes:  
+Iterate on the date separated list format by providing a note layout that stores them as selectable app-style, customizable icons with their names underneath and organized into groups by selectable topic
+Improved in-note navigation by presenting the toggleable setting of having Google-docs style Headings and Subheadings that take you to the specific entry/information in a Document tab accessible on the side of the screen
+Including a PASTE FROM CLIPBOARD icon that you press and select either with formatting or without formatting
+A direct ‘Add Entry’ button that takes you to the bottom of the note when without the Document Tab but when with the Document tab allows you to choose which section the text is entered into
+
+
+Considered “Twist” implementations:
+Add Entry Button
+The Add Entry button is intended to cut straight to the chase by allowing you to immediately start writing down the information you want to note down, then selecting based on your saved notes list and the formatting/structure inside of them, automatically get that note to where it should be
+When in a note document, pressing this button should very quickly take you to the exact place in the text document you want to add more information to.
+When in the notes navigation layout menu, pressing this ‘Add Entry’ button should allow you to select a specific section of any note document without opening it, give an area to input text/notes info, and then properly insert that information there. Upon completion users should get the option to observe how the entry was added and whether they want to cancel or adjust where the content was placed within the existing note themself
+Example:
+I have a notes app with the following written notes: Recipes, Birthdays, Word List. I want to quickly write down the birthday ‘Josh B - 5/28/2004’ and enter it into the proper location within Birthdays. Birthdays currently has the basic Headings Family, Friends, School, Work; moreover, I want this new entry to be placed into the Friends section at the end of the list. The following input is collected from the user: the entry: “ Josh B - 5/28/2004”, the specified note file: “Birthdays”, and the intended section: “Friends”. From here, behind the scenes, the entry should be taken, the note file should be accessed, the proper point in the section should be located, and the entry should be entered here. Upon completion of this task, the program should provide the feedback that it is done and give the user an option to view the entry within the section within the note directly. 
+This should not affect the other saved notes whatsoever, it should add to the correct section of the note without deleting or replacing any of the current contents of the note, and the entry itself should be taken and entered without changing or losing any of its contents/details.
+—
+|SAMPLE INPUTS|
+Entry =  “ Josh B - 5/28/2004”
+Note = “Birthdays”
+Section = “Friends”
+
+|BEFORE ACTION|
+Files:
+* Recipes
+Apple pie: recipe
+Butterscotch pie: recipe
+Snail pie: recipe
+
+* Birthdays
+Family
+Dad [1/1/1111]
+Mom [1/1/1111]
+
+Friends
+Lucas H - 1/1/1111
+Emma S - 1/1/1111
+
+School
+Froilan F - 1/1/1111 
+
+Work
+Gregory R - 1/1/1111
+
+* Word List
+exuviae - sloughed off natural animal coverings
+kludge -  a makeshift, clumsy, or inelegant solution
+
+|AFTER ACTION|
+Files:
+* Recipes
+Apple pie: recipe
+Butterscotch pie: recipe
+Snail pie: recipe
+
+* Birthdays
+Family
+Dad [1/1/1111]
+Mom [1/1/1111]
+
+Friends
+Lucas H - 1/1/1111
+Emma S - 1/1/1111
+Josh B - 5/28/2004
+
+School
+Froilan F - 1/1/1111 
+
+Work
+Gregory R - 1/1/1111
+
+* Word List
+exuviae - sloughed off natural animal coverings
+kludge -  a makeshift, clumsy, or inelegant solution
+—
+
+In-Note Document Tabs:
+Providing a navigation tab similar to the easily recognizable Google Docs format allows for fast and recognizable shortcut navigation within Notes. This would be nearly identical to the Google Docs ‘Document tabs’ and Heading/Subheading functionalities; prioritizing clear shortcuts and sections within extended notes.
+Near one of the far sides of the screen is a ‘Show tabs & outlines’ icon that acts functionally identically to the Document tabs of Google Docs
+Clicking on the icon expands the Document tabs side-menu that allows you to quickly navigate to headings and subheadings within the note by simply pressing them
+This menu should be swipeable to be made visible for ease of use. Holding on the ‘Show tabs & outlines’ icon and swiping toward the center y-axis of the screen should make the Document tabs menu visible. Holding on the visible side of the Document tab menu and swiping toward the side of the screen should hide the menu and return the ‘Show tabs & outlines’ icon to its original place
+The menu should be as similar to the Document tabs menu in Google Docs as possible with Headings being most left-aligned next to a vertical line and subheadings being indented from the line. Selected/visible headings currently on screen should be presented in a different color or a way to help indicate what section of the note you are currently on, allowing users to orient based on the screen contents and the menu feedback
+Creating Headings and subheadings that would be visible in this menu should be as simple as typing text, highlighting it, and pressing a Headings option from the inspect menu. After pressing this it should provide the easy options for Normal Text, Heading, and Subheading 
+Pressing one of these Headers or Subheaders just takes the display to corresponding line/section in the text document.
+Example Screenshots:
+(...\notes-redux\Resources\document_tabs_menu.png)
+(...\notes-redux\Resources\document_tabs_reference.png)
+
+Paste from Clipboard Icon
+Allows for a direct paste from clipboard functionality that removes extra steps of removing formatting or placing the information somewhere else in order to enter information in a way consistent with the rest of the notes text document. Taking notes should be fast and intuitive, so taking note of something like a body of text or a list should be easy and as fast as 2 taps.
+A clipboard paste icon located in one of the easily visible but non-distracting parts of the screen for common user actions
+When pressed this should pull up a small submenu that has the options ‘With Formatting’ and ‘Without Formatting’. 
+Pressing anywhere outside of the submenu closes the menu
+Pressing ‘With Formatting’ should paste as normal, including font size differences, bolds, underlines, etc.
+Pressing ‘Without Formatting’ should paste as text in basic text form (as if you pasted into a search bar then copied and pasted those contents)
+Once the action is completed the menu should close and the text should be apparent
+
+App-Style Layout:
+Providing a layout format that is similar to the nearly-universally understood mobile phone App Screen, App Library format allows this version of the notes app to be especially fast and easy to navigate. This would largely act the same as the iPhone app screen with similar actions and displays; however, this would be relatively simplified for quick ease of use as opposed to the robust/customizable/lived-in feeling of your personal phones navigation menu.
+Swiping left and right in the Home Notes page switches the layout style
+Bottom icons show either the normal vertical entry style or the App grid style
+When creating a new note or holding press on the note there is a ‘Change Icon’ option next to ‘Pin Note’, ‘Lock Note’, and ‘Duplicate Note’ that when pressed gives a simple customization sub menu
+Within the overlaid simple customization sub menu, you can select basic preset background options (flat color and gentle gradients) and choose basic preset icon options (simple emojis and special characters)
+Additionally, there is an option to set the note icon to be a square section of a saved Photo on the camera roll (Very similar process to setting a profile picture)
+The App-style note documents are displayed in a manner similar to the IPhone app menu with a grid layout and options for clusters of app-style note documents (reminiscent of the App Library screen)
+Clusters of app-style note documents can be given user-entered titles (examples are: Recently Added, Social, Creativity, Productivity)
+Example Screenshots:
+(...\notes-redux\Resources\app_layout_reference.png)
