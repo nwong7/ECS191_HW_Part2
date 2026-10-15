@@ -45,11 +45,11 @@ The Add Entry button is intended to cut straight to the chase by allowing you to
 When in a note document, pressing this button should very quickly take you to the exact place in the text document you want to add more information to.
 When in the notes navigation layout menu, pressing this ‘Add Entry’ button should allow you to select a specific section of any note document without opening it, give an area to input text/notes info, and then properly insert that information there. Upon completion users should get the option to observe how the entry was added and whether they want to cancel or adjust where the content was placed within the existing note themself
 Example:
-I have a notes app with the following written notes: Recipes, Birthdays, Word List. I want to quickly write down the birthday ‘Josh B - 5/28/2004’ and enter it into the proper location within Birthdays. Birthdays currently has the basic Headings Family, Friends, School, Work; moreover, I want this new entry to be placed into the Friends section at the end of the list. The following input is collected from the user: the entry: “ Josh B - 5/28/2004”, the specified note file: “Birthdays”, and the intended section: “Friends”. From here, behind the scenes, the entry should be taken, the note file should be accessed, the proper point in the section should be located, and the entry should be entered here. Upon completion of this task, the program should provide the feedback that it is done and give the user an option to view the entry within the section within the note directly. 
+I have a notes app with the following written notes: Recipes, Birthdays, Word List. I want to quickly write down the birthday ‘Josh - 4/28/2004’ and enter it into the proper location within Birthdays. Birthdays currently has the basic Headings Family, Friends, School, Work; moreover, I want this new entry to be placed into the Friends section at the end of the list. The following input is collected from the user: the entry: “ Josh - 4/28/2004”, the specified note file: “Birthdays”, and the intended section: “Friends”. From here, behind the scenes, the entry should be taken, the note file should be accessed, the proper point in the section should be located, and the entry should be entered here. Upon completion of this task, the program should provide the feedback that it is done and give the user an option to view the entry within the section within the note directly. 
 This should not affect the other saved notes whatsoever, it should add to the correct section of the note without deleting or replacing any of the current contents of the note, and the entry itself should be taken and entered without changing or losing any of its contents/details.
 —
 |SAMPLE INPUTS|
-Entry =  “ Josh B - 5/28/2004”
+Entry =  “ Josh - 4/28/2004”
 Note = “Birthdays”
 Section = “Friends”
 
@@ -66,14 +66,14 @@ Dad [1/1/1111]
 Mom [1/1/1111]
 
 Friends
-Lucas H - 1/1/1111
-Emma S - 1/1/1111
+Lucas - 1/1/1111
+Emma - 1/1/1111
 
 School
-Froilan F - 1/1/1111 
+Frank - 1/1/1111 
 
 Work
-Gregory R - 1/1/1111
+Gregory - 1/1/1111
 
 * Word List
 exuviae - sloughed off natural animal coverings
@@ -92,15 +92,15 @@ Dad [1/1/1111]
 Mom [1/1/1111]
 
 Friends
-Lucas H - 1/1/1111
-Emma S - 1/1/1111
-Josh B - 5/28/2004
+Lucas - 1/1/1111
+Emma - 1/1/1111
+Josh - 4/28/2004
 
 School
-Froilan F - 1/1/1111 
+Frank - 1/1/1111 
 
 Work
-Gregory R - 1/1/1111
+Greg - 1/1/1111
 
 * Word List
 exuviae - sloughed off natural animal coverings
