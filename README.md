@@ -77,7 +77,7 @@ Birthdays and Word List.
 valid destination. If the note or section is deleted while the sheet is open,
 the destination is flagged in red.
 
-*Example:* add `Josh B - 5/28/2004` to **Birthdays › Friends**. It lands
+*Example:* add `Josh - 4/28/2004` to **Birthdays › Friends**. It lands
 directly after the last friend and before the blank line that comes before
 *School*.
 
@@ -168,7 +168,7 @@ permissions, no secrets and no code signing. On a hosted macOS runner it:
    1. The notes list.
    2. The Birthdays note.
    3. The same note with its outline open.
-   4. An Add Entry of "Josh B - 5/28/2004" into *Friends*.
+   4. An Add Entry of "Josh - 4/28/2004" into *Friends*.
    5. A plain relaunch, to show the entry was saved.
    6. The Add Entry sheet, pre-filled but not submitted.
    7. The grid view.
